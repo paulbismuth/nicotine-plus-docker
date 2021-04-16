@@ -1,6 +1,6 @@
 # nicotine-plus-docker
 
-Nicotine+ v3.0 container accessible remotly via vnc.
+Nicotine+ v3.0 container accessible remotely via vnc.
 (Heavily) inspired by https://github.com/realies/nicotine-docker
 
 ## Typical Usage
