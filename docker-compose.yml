@@ -1,0 +1,19 @@
+services:
+  nicotine:
+    build:
+      context: .
+      args:
+        UID: 1000
+        GID: 1000
+
+    image: paulbismuth0/nicotine-plus
+    ports:
+      - 6080:6080
+    restart: always
+    volumes:
+      - type: bind
+        source: /var/nicotine-plus-docker/nicotine
+        target: /nicotine/.nicotine
+      - type: bind
+        source: /var/nicotine-plus-docker/downloads
+        target: /nicotine/downloads
