@@ -1,28 +1,13 @@
-FROM alpine:edge
+FROM jlesage/baseimage-gui:debian-11
 
-ARG USER=nicotine
-ARG GROUP=nicotine
-ARG UID=1000
-ARG GID=1000
+RUN apt-get update && \
+    apt install software-properties-common gpg -y && \
+    add-apt-repository ppa:nicotine-team/stable && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6CEB6050A30E5769 && \
+    apt update && \
+    apt install nicotine -y && \
+    mkdir -p /config/nicotine/downloads && \
 
-RUN addgroup -g ${GID} -S ${GROUP} && \
-    adduser -S -D -u ${UID} -h /nicotine -G ${GROUP} -g nicotine ${USER} && \
-    apk update && apk upgrade && \
-    apk add --virtual build-dependencies py3-pip py3-setuptools && \
-    apk add bash supervisor xvfb x11vnc ttf-dejavu openbox dbus && \
-    apk add novnc nicotine-plus --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted && \
-    pip install --upgrade setuptools && \
-    pip install mutagen && \
-    mkdir -p /nicotine/downloads && \
-    chown -R ${USER}:${GROUP} /nicotine && \
-    sed -i "s/scale', false/scale', true/" /usr/share/novnc/vnc_lite.html && \
-    ln -s /nicotine/downloads /usr/share/novnc && \
-    apk del build-dependencies && \
-    rm -rf /var/cache/apk/*
+COPY startapp.sh /startapp.sh
 
-ADD etc /etc
-ADD usr /usr
-
-USER ${USER}
-
-ENTRYPOINT ["/usr/bin/supervisord","-c","/etc/supervisord.conf"]
+ENV APP_NAME="Nicotine+"
