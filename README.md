@@ -7,10 +7,8 @@ Nicotine+ v3.0 container accessible remotely via vnc.
 
 ##### Using Docker CLI
 ```
-docker run -d --name nicotine --restart=always \
--v /var/nicotine-plus-docker/nicotine:/nicotine/.nicotine \
--v /var/nicotine-plus-docker/downloads:/nicotine/downloads \
--p 6080:6080 \
+docker run -d --name nicotine --restart=unless-stopped \
+-v ./nicotine:/config/xdg/data/nicotine \
 paulbismuth0/nicotine-plus
 ```
 

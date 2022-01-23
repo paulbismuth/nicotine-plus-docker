@@ -2,9 +2,10 @@ services:
   nicotine:
     image: paulbismuth0/nicotine-plus
     ports:
-      - 6080:6080
+      - 5800:5800
+      - 5900:5900
     restart: unless-stopped
     volumes:
       - type: bind
-        source: ./
+        source: ./nicotine
         target: /config/xdg/data/nicotine
